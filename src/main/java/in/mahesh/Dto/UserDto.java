@@ -6,7 +6,7 @@ public class UserDto {
 	private String name;
 	private String email;
 	private Long phNo;
-	private String oldPassword;
+	private String password;
 	private String newPassword;
 	private String confirmPassword;
 	private Integer countryId;
@@ -38,11 +38,13 @@ public class UserDto {
 	public void setPhNo(Long phNo) {
 		this.phNo = phNo;
 	}
-	public String getOldPassword() {
-		return oldPassword;
+	
+	
+	public String getPassword() {
+		return password;
 	}
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
+	public void setPassword(String password) {
+		password = password;
 	}
 	public String getNewPassword() {
 		return newPassword;

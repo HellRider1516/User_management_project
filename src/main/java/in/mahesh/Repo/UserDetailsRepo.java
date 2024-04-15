@@ -10,8 +10,10 @@ import in.mahesh.entity.UserEntity;
 
 public interface UserDetailsRepo extends JpaRepository<UserEntity, Integer> {
 	
-	public List<UserEntity> findByEmail(String email);
+	public UserEntity findByEmail(String email);
 	
-	public UserEntity findByemailAndPassword(String email, String password);
+	public UserEntity findByEmailAndPassword(String email, String password);
+	
+	
 
 }

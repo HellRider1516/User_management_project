@@ -85,7 +85,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserDto getuser(String mail) {
 		ModelMapper mapper = new ModelMapper();
-		List<UserEntity> list = userRepo.findByEmail(mail);
+		UserEntity list = userRepo.findByEmail(mail);
 		if(list  == null) {
 			return null;
 		}
@@ -105,10 +105,10 @@ public class UserServiceImp implements UserService {
 		user.setCountryEntity(country);
 		user.setStateEntity(state);
 		user.setCityEntity(city);
-		user.setPassword(passwordGenerator.generatePassword(8));
-		user.setPasswordUpdated("no");
+		user.setPassword(passwordGenerator.getRandomString());
+		user.setPasswordStatus("no");
 		UserEntity userSaved = userRepo.save(user);
-		String body="your Account has been Created and your password is"+passwordGenerator.generatePassword(8);
+		String body="your Account has been Created and your password is"+passwordGenerator.getRandomString();
 		emailUtils.mailSent(user.getEmail(), body, "Account Details");
 		return userSaved.getUserId()!=null;
 		
@@ -118,21 +118,22 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserDto getUser(LoginDto loginDto) {
 		ModelMapper mapper = new ModelMapper();
-		 UserEntity list = userRepo.findByemailAndPassword(loginDto.getEmail() , loginDto.getPassword());
-		 if(list==null) {
+		  UserEntity list = userRepo.findByEmailAndPassword(loginDto.getEmail() , loginDto.getPassword());
+		 if(list == null) {
 			 return null;
 		 }
 		 UserDto dto = mapper.map(list, UserDto.class);
+		 
 		 return dto;
 		
 	}
 
 	@Override
 	public boolean resetPassword(ResetPasswordDto resetPasswordDto ) {
-		UserEntity user = userRepo.findByemailAndPassword(resetPasswordDto.getEmail(), resetPasswordDto.getOldPassword());
-		if(user!=null) {
+		 UserEntity user = userRepo.findByEmailAndPassword(resetPasswordDto.getEmail(), resetPasswordDto.getPassword());
+		if(user != null) {
 			user.setPassword(resetPasswordDto.getNewPassword());
-			user.setPasswordUpdated("yes");
+			user.setPasswordStatus(getQuote());
 			userRepo.save(user);
 			return true;
 		}

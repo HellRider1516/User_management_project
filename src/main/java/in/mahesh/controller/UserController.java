@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import in.mahesh.Dto.LoginDto;
@@ -48,7 +51,7 @@ public class UserController {
 	@PostMapping("/register")
 	public String register(Model model , RegisterDto registerDto) {
 		UserDto getuser = service.getuser(registerDto.getEmail());
-		if(getuser != null) {
+		if(getuser.getUserId() != null) {
 			model.addAttribute("error", "User Already Exists...");
 			model.addAttribute("register", new RegisterDto());
 			return "register";
@@ -74,13 +77,13 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(LoginDto loginDto , Model model) {
 		UserDto user = service.getUser(loginDto);
-		if(user==null) {
+		if(user == null) {
 			model.addAttribute("error", "Invaild Creditals...");
 			model.addAttribute("login", new LoginDto());
 			return "login";
 		}
 		String status = user.getPasswordStatus();
-		if(status.equals("yes")) {
+		if(status!=null && status.equals("yes")) {
 			return "redirect:dashboard";
 		}else {
 			model.addAttribute("resetPassword", new ResetPasswordDto());
@@ -90,8 +93,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/resetPassword")
-	public String resetpassword(Model model , ResetPasswordDto resetPasswordDto) {
-		if(resetPasswordDto.getOldPassword()==null) {
+	public String resetpassword(Model model ,@ModelAttribute ResetPasswordDto resetPasswordDto) {
+		if(resetPasswordDto.getPassword()==null) {
 			model.addAttribute("error", "password is null");
 			return "resetPassword";
 		}
@@ -102,7 +105,7 @@ public class UserController {
 		
 		
 		UserDto user = service.getuser(resetPasswordDto.getEmail());
-		if(user.getOldPassword().equals(resetPasswordDto.getNewPassword())) {
+		if(user.getPassword().equals(resetPasswordDto.getNewPassword())) {
 			boolean status = service.resetPassword(resetPasswordDto);
 			if(status) {
 				return "redirect:dashboard";

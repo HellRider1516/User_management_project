@@ -3,20 +3,24 @@ package in.mahesh.Dto;
 public class ResetPasswordDto {
 	
 	private String email;
-	private String oldPassword;
+	private String password;
 	private String newPassword;
 	private String confirmPassword;
+	
+	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getOldPassword() {
-		return oldPassword;
+	
+	
+	public String getPassword() {
+		return password;
 	}
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
+	public void setPassword(String password) {
+		password = password;
 	}
 	public String getNewPassword() {
 		return newPassword;

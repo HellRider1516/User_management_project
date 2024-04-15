@@ -24,7 +24,7 @@ public class UserEntity {
 	private String email;
 	private String password;
 	private Long phNo;
-	private String passwordUpdated;
+	private String passwordStatus;
 	
 	@CreationTimestamp
 	private LocalDate createdDate;
@@ -84,12 +84,14 @@ public class UserEntity {
 		this.phNo = phNo;
 	}
 
-	public String getPasswordUpdated() {
-		return passwordUpdated;
+	
+
+	public String getPasswordStatus() {
+		return passwordStatus;
 	}
 
-	public void setPasswordUpdated(String passwordUpdated) {
-		this.passwordUpdated = passwordUpdated;
+	public void setPasswordStatus(String passwordStatus) {
+		this.passwordStatus = passwordStatus;
 	}
 
 	public LocalDate getCreatedDate() {

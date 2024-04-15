@@ -4,6 +4,7 @@ public class LoginDto {
 	
 	private String email;
 	private String password;
+	private String passwordStatus;
 	
 	
 	public String getEmail() {
@@ -18,6 +19,14 @@ public class LoginDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getPasswordStatus() {
+		return passwordStatus;
+	}
+	public void setPasswordStatus(String passwordStatus) {
+		this.passwordStatus = passwordStatus;
+	}
+	
+	
 	
 	
 
