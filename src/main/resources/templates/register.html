@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+	  <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register Page</title>
@@ -27,15 +28,29 @@
 				  </tr>
 				  <tr>
 					  <td>Country</td>
-					  <td><input type="number" th:field="*{countryId}"/></td>
+					<td>
+						<select th:field="*{countryId}" id="countryId" class="form-select" >
+							<option value="">-Select-</option>
+							<option th:each="entry : ${countires.entrySet()}" th:value="${entry.key}"
+								th:text="${entry.value}">
+						</select>
+					</td>
 				  </tr>
 				  <tr>
 					  <td>State</td>
-					  <td><input type="number" th:field="*{stateId}"/></td>
+					  <td>
+						<select th:field="*{stateId}" id="stateId" class="form-select" >
+							<option value="">-Select-</option>
+						</select>
+					</td>
 				  </tr>
 				  <tr>
 					  <td>City</td>
-					  <td><input type="number" th:field="*{cityId}"/></td>
+					  <td>
+						<select th:field="*{cityId}" id="cityId" class="form-select" >
+							<option value="">-Select-</option>
+						</select>
+					</td>
 				  </tr>
 				  <tr>
 					  <td></td>
@@ -44,7 +59,60 @@
 			  </table>
 		  </form>
 		  Do you Have Account?<a href="/">Sign-Up Here</a>
-	  </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		<script>
+
+		$(document).ready(function () {
+
+			$("#countryId").on("change", function () {
+
+				$('#stateId').find('option').remove();
+				$('#cityId').find('option').remove();
+
+				$('<option>').val('').text('-Select-').appendTo("#stateId");
+				$('<option>').val('').text('-Select-').appendTo("#cityId");
+
+				var cid = $('#countryId').val();
+				$.ajax({
+					type: 'GET',
+					url: '/state/' + cid,
+					success: function (response) {
+						console.log(response);
+						$.each(response, function (key, value) {
+							$('<option>').val(key).text(value).appendTo("#stateId");
+						});
+					}
+				});
+			});
+
+			$("#stateId").on("change", function () {
+
+				$('#cityId').find('option').remove();
+				$('<option>').val('').text('-Select-').appendTo("#cityId");
+
+
+				var sid = $('#stateId').val();
+				$.ajax({
+					type: 'GET',
+					url: '/cities/' + sid,
+					success: function (response) {
+						console.log(response);
+						$.each(response, function (key, value) {
+							$('<option>').val(key).text(value).appendTo("#cityId");
+						});
+					}
+				});
+			});
+		});
+
+	</script>
+
+
   </body>
 </html>

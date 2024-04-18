@@ -49,6 +49,8 @@ public class UserServiceImp implements UserService {
 	@Autowired
 	private PasswordGenerator passwordGenerator; 
 	
+	QuoteDto[] value = null;
+	
 
 	@Override
 	public Map<Integer, String> getCountries() {
@@ -133,7 +135,7 @@ public class UserServiceImp implements UserService {
 		 UserEntity user = userRepo.findByEmailAndPassword(resetPasswordDto.getEmail(), resetPasswordDto.getPassword());
 		if(user != null) {
 			user.setPassword(resetPasswordDto.getNewPassword());
-			user.setPasswordStatus(getQuote());
+			user.setPasswordStatus("yes");
 			userRepo.save(user);
 			return true;
 		}
@@ -143,7 +145,7 @@ public class UserServiceImp implements UserService {
 
 	@Override
 	public String getQuote() {
-		QuoteDto[] value = null;
+		
 		
 		 String url="https://type.fit/api/quotes";
 		 
@@ -159,8 +161,7 @@ public class UserServiceImp implements UserService {
 		 }
 		 Random r = new Random();
 		 int index = r.nextInt(value.length-1);
-			/* return value[index].getText(); */
-		 return null;
+			return value[index].getText(); 
 		 
 		 
 	}

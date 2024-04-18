@@ -9,7 +9,7 @@ import in.mahesh.entity.StateEntity;
 
 public interface StateRepo extends JpaRepository<StateEntity, Integer> {
 	
-	@Query(value="select *from state_master where state_id=:stateId" , nativeQuery = true)
+	@Query(value="select *from state_master where country_id=:stateId" , nativeQuery = true)
 	public List<StateEntity> getStates(Integer stateId);
 
 }

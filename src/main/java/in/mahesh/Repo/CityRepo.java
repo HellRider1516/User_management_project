@@ -9,7 +9,7 @@ import in.mahesh.entity.CityEntity;
 
 public interface CityRepo extends JpaRepository<CityEntity, Integer> {
 	
-	@Query(value="select *from city_master where city_id=:cityId" , nativeQuery = true)
+	@Query(value="select *from city_master where state_id=:cityId" , nativeQuery = true)
 	public List<CityEntity> getCities(Integer cityId);
 
 }

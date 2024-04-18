@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    password: MahesH1516@
+    url: jdbc:mysql://localhost:3306/maheshdb
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    password: welx mnab fwcl szej
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: hellridermahesh@gmail.com
+    
+    
+app:
+  message:
+    dupEmail : User Already Exists...
+    regSucess : Account has been Created...
+    regError : Plz Try again...
+    invaildCreditals : Invaild Creditals...
+    passwordNull : password is null....
+    passwordMatch : Password must Match.....
+    passwordUpdated : Password upadte failed....
+    oldPasswordError : Given Old Password is Wrong...
