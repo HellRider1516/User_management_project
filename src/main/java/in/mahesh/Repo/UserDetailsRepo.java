@@ -1,10 +1,8 @@
 package in.mahesh.Repo;
 
-import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import in.mahesh.Dto.UserDto;
 import in.mahesh.entity.UserEntity;
 
 

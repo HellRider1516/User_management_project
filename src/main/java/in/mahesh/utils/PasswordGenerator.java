@@ -6,6 +6,12 @@ import java.util.Base64;
 import org.springframework.stereotype.Controller;
 @Controller
 public class PasswordGenerator {
+	
+	
+	private PasswordGenerator() {
+		super();
+	}
+
 	public static String getRandomString() {
         return getRandomString(8); // Default length is 8
     }

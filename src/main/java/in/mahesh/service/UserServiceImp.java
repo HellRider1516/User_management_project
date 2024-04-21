@@ -51,14 +51,14 @@ public class UserServiceImp implements UserService {
 	
 	QuoteDto[] value = null;
 	
+	Random r = new Random();
+	
 
 	@Override
 	public Map<Integer, String> getCountries() {
 		Map<Integer, String> countryMap = new HashMap<>();
 		List<CountryEntity> all = countryRepo.findAll();
-		all.forEach(e -> {
-			countryMap.put(e.getCountryId(), e.getCountryName());
-		});
+		all.forEach(e -> countryMap.put(e.getCountryId(), e.getCountryName()));
 		return countryMap;
 	}
 
@@ -66,10 +66,7 @@ public class UserServiceImp implements UserService {
 	public Map<Integer, String> getStates(Integer countryId) {
 		Map<Integer, String> mapStates = new HashMap<>();
 		List<StateEntity> states = stateRepo.getStates(countryId);
-		states.forEach(e -> {
-			mapStates.put(e.getStateId(),e.getStateName());
-		});
-		
+		states.forEach(e -> mapStates.put(e.getStateId(),e.getStateName()));
 		return mapStates;
 	}
 
@@ -77,10 +74,7 @@ public class UserServiceImp implements UserService {
 	public Map<Integer, String> getcities(Integer stateId) {
 		Map<Integer, String> mapcity = new HashMap<>();
 		List<CityEntity> cities = cityRepo.getCities(stateId);
-		cities.forEach(e -> {
-			mapcity.put(e.getCityId(), e.getCityName());
-		});
-		
+		cities.forEach(e -> mapcity.put(e.getCityId(), e.getCityName()));
 		return mapcity;
 	}
 
@@ -91,9 +85,7 @@ public class UserServiceImp implements UserService {
 		if(list  == null) {
 			return null;
 		}
-		UserDto userDto = mapper.map(list, UserDto.class);
-		
-		return userDto;
+		return mapper.map(list, UserDto.class);
 		
 	}
 
@@ -118,15 +110,13 @@ public class UserServiceImp implements UserService {
 	}
 
 	@Override
-	public UserDto getUser(LoginDto loginDto) {
+	public UserDto getuser(LoginDto loginDto) {
 		ModelMapper mapper = new ModelMapper();
 		  UserEntity list = userRepo.findByEmailAndPassword(loginDto.getEmail() , loginDto.getPassword());
 		 if(list == null) {
 			 return null;
 		 }
-		 UserDto dto = mapper.map(list, UserDto.class);
-		 
-		 return dto;
+		 return mapper.map(list, UserDto.class);
 		
 	}
 
@@ -159,7 +149,7 @@ public class UserServiceImp implements UserService {
 		 }catch(Exception e) {
 			 e.printStackTrace();
 		 }
-		 Random r = new Random();
+		 
 		 int index = r.nextInt(value.length-1);
 			return value[index].getText(); 
 		 

@@ -19,7 +19,7 @@ public interface UserService {
 	
 	public boolean registerUser(RegisterDto regDto);
 	
-	public UserDto getUser(LoginDto loginDto);
+	public UserDto getuser(LoginDto loginDto);
 	
 	public boolean resetPassword(ResetPasswordDto resetPasswordDto);
 	

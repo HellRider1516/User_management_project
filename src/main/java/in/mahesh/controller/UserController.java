@@ -32,22 +32,20 @@ public class UserController {
 		model.addAttribute(AppConstant.REG_OBJ, new RegisterDto());
 		Map<Integer, String> countryMap = service.getCountries();
 		model.addAttribute(AppConstant.COUNTRY_OBJ, countryMap);
-		return"register";
+		return AppConstant.REG_VIEW;
 	}
 	
 	@GetMapping("/state/{countryId}")
 	@ResponseBody
 	public Map<Integer, String> getStates(@PathVariable("countryId") Integer countryId){
-		Map<Integer, String> statesMap = service.getStates(countryId);
-		return statesMap;
+		return service.getStates(countryId);
 		
 	}
 
 	@GetMapping("/cities/{stateId}")
 	@ResponseBody
 	public Map<Integer, String> getCities(@PathVariable("stateId") Integer stateId){
-		Map<Integer, String> citiesMap = service.getcities(stateId);
-		return citiesMap;
+		return service.getcities(stateId);
 	}
 	
 	@PostMapping("/register")
@@ -60,7 +58,7 @@ public class UserController {
 		if(getuser != null) {
 			model.addAttribute(AppConstant.ERROR_MSG,message.get("dupEmail") );
 			model.addAttribute(AppConstant.REG_OBJ, new RegisterDto());
-			return "register";
+			return AppConstant.REG_VIEW;
 		}
 		
 		boolean status = service.registerUser(registerDto);
@@ -71,23 +69,23 @@ public class UserController {
 			model.addAttribute(AppConstant.ERROR_MSG, message.get("regError")); 
 			model.addAttribute(AppConstant.REG_OBJ, new RegisterDto());
 		}
-		return "register";
+		return AppConstant.REG_VIEW;
 	}
 	
 	@GetMapping("/")
 	public String loginPage(Model model) {
 		model.addAttribute(AppConstant.LOGIN_OBJ, new LoginDto());
-		return "login";
+		return AppConstant.LOGIN_VIEW;
 	}
 	
 	@PostMapping("/login")
 	public String login(LoginDto loginDto , Model model) {
 		Map<String, String> message = appProp.getMessage();
-		UserDto user = service.getUser(loginDto);
+		UserDto user = service.getuser(loginDto);
 		if(user == null) {
 			model.addAttribute(AppConstant.ERROR_MSG,message.get("invaildCreditals") );
 			model.addAttribute(AppConstant.LOGIN_OBJ, new LoginDto());
-			return "login";
+			return AppConstant.LOGIN_VIEW;
 		}
 		String status = user.getPasswordStatus();
 		if(status!=null && status.equals("yes")) {
@@ -106,11 +104,11 @@ public class UserController {
 		Map<String, String> message = appProp.getMessage();
 		if(resetPasswordDto.getPassword() == null) {
 			model.addAttribute(AppConstant.ERROR_MSG, message.get("passwordNull"));
-			return "resetPassword";
+			return AppConstant.RESET_VIEW;
 		}
 		if(!(resetPasswordDto.getNewPassword().equals(resetPasswordDto.getConfirmPassword()))) {
 			model.addAttribute(AppConstant.ERROR_MSG, message.get("passwordMatch"));
-			return "resetPassword";
+			return AppConstant.RESET_VIEW;
 		}
 		
 		
@@ -120,11 +118,11 @@ public class UserController {
 				return "redirect:dashboard";
 			}else {
 				model.addAttribute(AppConstant.ERROR_MSG, message.get("passwordUpdated"));
-				return "resetPassword";
+				return AppConstant.RESET_VIEW;
 			}
 		}else {
 			model.addAttribute(AppConstant.ERROR_MSG, message.get("oldPasswordError"));
-			return "resetPassword";
+			return AppConstant.RESET_VIEW;
 		}
 		
 	}

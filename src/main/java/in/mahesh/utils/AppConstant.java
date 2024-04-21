@@ -4,6 +4,12 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class AppConstant {
+	
+	
+
+	private AppConstant() {
+		super();
+	}
 
 	public static final String REG_OBJ="register";
 	
@@ -18,6 +24,12 @@ public class AppConstant {
 	public static final String RESPWD_OBJ="resetPassword";
 	
 	public static final String DASHBOARD_OBJ="dashboard";
+	
+	public static final String REG_VIEW="register";
+	
+	public static final String LOGIN_VIEW="login";
+	
+	public static final String RESET_VIEW="resetPassword";
 	
 	
 }

@@ -44,7 +44,7 @@ public class UserDto {
 		return password;
 	}
 	public void setPassword(String password) {
-		password = password;
+		this.password = password;
 	}
 	public String getNewPassword() {
 		return newPassword;
